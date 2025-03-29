@@ -17,6 +17,10 @@ io.on('connection', (socket) => {
       io.emit('lock');
     }
   });
+
+  socket.on('reset', () => {
+    locked = false;
+  });
 });
 
 app.get('*', (req, res) => {
