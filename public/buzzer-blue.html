@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>أنا أول! - الأزرق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #004ea7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    button {
+      background-color: white;
+      color: #004ea7;
+      font-size: 3rem;
+      padding: 1.5rem 3rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ddd;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <button id="buzzBtn">أنا أول!</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const btn = document.getElementById('buzzBtn');
+    btn.onclick = () => {
+      socket.emit('buzz', 'الأزرق');
+      btn.disabled = true;
+    };
+    socket.on('lock', () => {
+      btn.disabled = true;
+    });
+  </script>
+</body>
+</html>
