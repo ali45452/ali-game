@@ -36,12 +36,18 @@
   <script>
     const socket = io();
     const btn = document.getElementById('buzzBtn');
+
     btn.onclick = () => {
       socket.emit('buzz', 'الأزرق');
       btn.disabled = true;
     };
+
     socket.on('lock', () => {
       btn.disabled = true;
+    });
+
+    socket.on('reset', () => {
+      btn.disabled = false;
     });
   </script>
 </body>
