@@ -41,14 +41,21 @@
   <button id="buzzBtn"></button>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
-    const btn = document.getElementById('buzzBtn');
-    btn.onclick = () => {
-      socket.emit('buzz', 'الأحمر');
-      btn.disabled = true;
-    };
-    socket.on('lock', () => btn.disabled = true);
-    socket.on('reset', () => btn.disabled = false);
+const socket = io();
+const btn = document.getElementById('buzzBtn');
+
+btn.onclick = () => {
+  socket.emit('buzz', 'الأحمر'); // أو 'الأزرق' حسب الزر
+  btn.disabled = true;
+};
+
+socket.on('lock', () => {
+  btn.disabled = true;
+});
+
+socket.on('reset', () => {
+  btn.disabled = false;
+});
   </script>
 </body>
 </html>
