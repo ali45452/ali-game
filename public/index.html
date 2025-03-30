@@ -946,19 +946,29 @@ window.addEventListener('load', adjustHeight);
 <script>
   const socket = io();
 
-socket.on('winner', (player) => {
-  const buzzerSound = new Audio("/buzzer.mp3");
-  buzzerSound.play();
+  // تحميل صوت الزر
+  socket.on('winner', (player) => {
+    // تشغيل الصوت
+    const sound = new Audio("/buzzer.mp3");
+    sound.play().catch(err => console.warn("فشل تشغيل الصوت تلقائيًا:", err));
 
-  const msg = document.createElement('div');
-  msg.textContent = `🎉 ${player} ضغط أولًا!`;
-  msg.style.fontSize = '32px';
-  msg.style.color = 'gold';
-  msg.style.marginTop = '20px';
-  msg.style.textShadow = '2px 2px 6px black';
-  document.body.appendChild(msg);
+    const msg = document.createElement('div');
+    msg.id = "winnerMsg";
+    msg.textContent = `🎉 ${player} ضغط أولًا!`;
+    msg.style.position = "fixed";
+    msg.style.top = "50%";
+    msg.style.left = "50%";
+    msg.style.transform = "translate(-50%, -50%)";
+    msg.style.fontSize = "36px";
+    msg.style.background = "rgba(0,0,0,0.6)";
+    msg.style.padding = "30px";
+    msg.style.borderRadius = "20px";
+    msg.style.color = "gold";
+    msg.style.textShadow = "2px 2px 6px black";
+    msg.style.zIndex = "9999";
+    document.body.appendChild(msg);
 
-    // إعادة التفعيل بعد 10 ثواني
+    // إزالة الرسالة بعد 10 ثواني
     setTimeout(() => {
       socket.emit('reset');
       msg.remove();
