@@ -10,13 +10,19 @@ let locked = false;
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', (socket) => {
-  socket.on('buzz', (player) => {
-    if (!locked) {
-      locked = true;
-      io.emit('winner', player);
-      io.emit('lock');
-    }
-  });
+socket.on('buzz', (player) => {
+  if (!locked) {
+    locked = true;
+    io.emit('winner', player);
+    io.emit('lock');
+
+    // ✅ أضف هذا لتفعيل الأزرار تلقائيًا بعد 10 ثواني
+    setTimeout(() => {
+      locked = false;
+      io.emit('reset');
+    }, 5000);
+  }
+});
 
   socket.on('reset', () => {
     locked = false;
