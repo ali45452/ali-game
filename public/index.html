@@ -942,15 +942,17 @@ window.addEventListener('load', adjustHeight);
   </script>
   <audio id="winSound" src="win.mp3" preload="auto"></audio>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
 
-  // تحميل صوت الزر
-  socket.on('winner', (player) => {
-    // تشغيل الصوت
-    const sound = new Audio("/buzzer.mp3");
-    sound.play().catch(err => console.warn("فشل تشغيل الصوت تلقائيًا:", err));
+    // تحميل الصوت مسبقًا
+    const buzzerSound = new Audio("/buzzer.mp3");
+    buzzerSound.load();
+
+    socket.on('winner', (player) => {
+      buzzerSound.currentTime = 0;
+      buzzerSound.play().catch(err => console.warn("فشل تشغيل الصوت تلقائيًا:", err));
 
     const msg = document.createElement('div');
     msg.id = "winnerMsg";
