@@ -945,14 +945,14 @@ window.addEventListener('load', adjustHeight);
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
-
-    // تحميل الصوت مسبقًا
     const buzzerSound = new Audio("/buzzer.mp3");
     buzzerSound.load();
 
     socket.on('winner', (player) => {
       buzzerSound.currentTime = 0;
-      buzzerSound.play().catch(err => console.warn("فشل تشغيل الصوت تلقائيًا:", err));
+      buzzerSound.play().catch(err => {
+        console.warn("فشل تشغيل الصوت:", err);
+      });
 
     const msg = document.createElement('div');
     msg.id = "winnerMsg";
@@ -970,11 +970,11 @@ window.addEventListener('load', adjustHeight);
     msg.style.zIndex = "9999";
     document.body.appendChild(msg);
 
-    // إزالة الرسالة بعد 10 ثواني
+    // إزالة الرسالة بعد 5 ثواني
     setTimeout(() => {
       socket.emit('reset');
       msg.remove();
-    }, 10000);
+    }, 5000);
   });
 </script>
 
