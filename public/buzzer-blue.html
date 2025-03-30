@@ -38,24 +38,27 @@
   </style>
 </head>
 <body>
-  <button id="buzzBtn"></button>
+  <button id="buzzBtn">أنا أول!</button>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
-const socket = io();
-const btn = document.getElementById('buzzBtn');
+    const socket = io();
+    const btn = document.getElementById('buzzBtn');
 
-btn.onclick = () => {
-  socket.emit('buzz', 'الازرق'); // أو 'الأزرق' حسب الزر
-  btn.disabled = true;
-};
+    btn.onclick = () => {
+      socket.emit('buzz', 'الأزرق');
+      btn.disabled = true;
+    };
 
-socket.on('lock', () => {
-  btn.disabled = true;
-});
+    socket.on('lock', () => {
+      btn.disabled = true;
+    });
 
-socket.on('reset', () => {
-  btn.disabled = false;
-});
+    socket.on('reset', () => {
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 5000); // إعادة التفعيل بعد 5 ثواني
+    });
   </script>
 </body>
 </html>
