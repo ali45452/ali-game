@@ -17,10 +17,10 @@ socket.on('buzz', (player) => {
     io.emit('lock');
 
     // ✅ أضف هذا لتفعيل الأزرار تلقائيًا بعد 10 ثواني
-    setTimeout(() => {
-      locked = false;
-      io.emit('reset');
-    }, 5000);
+setTimeout(() => {
+  locked = false;
+  io.emit('reset');
+}, 5000);
   }
 });
 
